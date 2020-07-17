@@ -1,11 +1,14 @@
-FROM docker.io/alpine:3.12
+FROM docker.io/ubuntu:20.04
 
-RUN addgroup -S hugo && \
-    adduser -S -g hugo hugo  && \
-    apk add git hugo
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN groupadd -r hugo && \
+  useradd -r -s /bin/false -g hugo hugo && \
+  apt-get update && \
+  apt-get -y install git hugo
 
 USER hugo
 
 WORKDIR /web
 
-ENTRYPOINT ["/bin/ash"]
+ENTRYPOINT ["/bin/bash"]
